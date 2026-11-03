@@ -1,3 +1,4 @@
+import os
 import time
 
 import pytest
@@ -22,7 +23,7 @@ def test_login_wrong_password(driver):
     test_go_to_login(driver)
     time.sleep(2)
     driver.find_element(By.CSS_SELECTOR, "input[name='username']").send_keys("")
-    driver.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys("Zxczxczxc1!")
+    driver.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys(os.getenv("ILCARRO_PASSWORD"))
     driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
 
     error_massage = driver.find_element(By.CSS_SELECTOR, ".error").text

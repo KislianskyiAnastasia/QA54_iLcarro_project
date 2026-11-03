@@ -19,8 +19,8 @@ def test_login_fail(driver):
     test_go_to_login(driver)
 
     time.sleep(2)
-    driver.find_element(By.CSS_SELECTOR, "input[name='username']").send_keys("Nastya_star@mail.com")
-    driver.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys("Zxczxczxc1")
+    driver.find_element(By.CSS_SELECTOR, "input[name='username']").send_keys("Nastya_f@mail.com")
+    driver.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys("Zxczxczxc")
     driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
     time.sleep(2)
     error_massage = driver.find_element(By.CSS_SELECTOR, " div[class='modal-content'] p").text
