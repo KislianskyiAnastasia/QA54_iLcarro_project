@@ -1,34 +1,18 @@
 import os
-import time
-import pytest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 
-from login_helper import test_go_to_login
+from selenium.webdriver.chrome.webdriver import WebDriver
 
-URL = "https://icarro-v1.netlify.app/search?page=0&size=10"
-EXPECTED_URL= "https://icarro-v1.netlify.app/login"
-
-@pytest.fixture
-def driver():
-    driver = webdriver.Chrome()
-    driver.get(URL)
-
-    yield driver
-
-    driver.quit()
+from pages.login_page import LoginPage
 
 
-def test_login_success(driver):
-    test_go_to_login(driver)
+def test_login_success(driver: WebDriver):
+    login_page = LoginPage(driver)
 
-    time.sleep(2)
-    driver.find_element(By.CSS_SELECTOR,"input[name='username']").send_keys(os.getenv("ILCARRO_EMAIL"))
-    driver.find_element(By.CSS_SELECTOR,"input[name='password']").send_keys(os.getenv("ILCARRO_PASSWORD"))
-    driver.find_element(By.CSS_SELECTOR,"button[type='submit']").click()
+    login_page.open_login_page()
+    login_page.fill_email_field(os.getenv("ILCARRO_EMAIL"))
+    login_page.fill_password_field(os.getenv("ILCARRO_PASSWORD"))
+    login_page.click_login_button()
 
-    assert driver.current_url == EXPECTED_URL
-
-
-
+    assert login_page.is_login_success() == "You are logged in success"
+    login_page.is_ok_login_success()
 
